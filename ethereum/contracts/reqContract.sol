@@ -5,51 +5,86 @@ contract Factory
     address[] public deployedCampaigns;
     uint reqDonation;
     
-    function CreateNewRequest (uint reqDon) public
+    function CreateNewDonationRequest (uint reqDonationAmount) public
     {
-     address newRequest=new NewRequest(reqDon,msg.sender);
-     deployedCampaigns.push(newRequest);
+     require (findNgo(msg.sender));
+     address newDonationRequest=new NewDonationRequest(reqDonationAmount,msg.sender);
+     deployedCampaigns.push(newDonationRequest);
     }
+    
+    mapping(address=>bool) donors;
+    mapping(address=>bool) ngos;
+    mapping(address=>bool) merchants;
+    
+    function registerDonor() public{
+        
+        
+        donors[msg.sender]=true;
+    }
+    
+    function registerNgo() public{
+        
+        ngos[msg.sender]=true;
+    }
+    
+    function registerMerchant() public{
+        
+        merchants[msg.sender]=true;
+    }
+    
+    function findDonor(address Address) public view returns(bool) {
+        return donors[Address];
+    }
+    
+    function findNgo(address Address) public view returns(bool) {
+        return ngos[Address];
+    }
+    
+    function findMerchant(address Address) public view returns(bool) {
+        return merchants[Address];
+    }
+    
 }
 
-contract NewRequest {
+contract NewDonationRequest {
     
-    address public manager;
-    uint public totalContribution;
-    uint public contriRecieved;
+    address public ngo; //address of the ngo account
+    uint public reqDonationAmount;
+    
     uint public minimumContribution;
     mapping(address=>bool) donors;
     
+    //Address of the donation Contract
     address contractAddress;
     
     uint public donationRecived;
     
-    uint donorCount;
+    uint donorCount;// no of donors
     
     struct Request{
         string description;
-        uint monReq;
+        uint amountRequired;
         address Merchant;
         bool complete;
-        uint appCount;
-        mapping(address=>bool) approved;
+        uint approvalCount;
+        mapping(address=>bool) approvers;
     }
     
     Request[] public requests;
     
     constructor (uint totalCon,address man) public
     {
-        totalContribution=totalCon;
+        reqDonationAmount=totalCon;
         minimumContribution=uint(totalCon/20);
-        manager=man;
-        contriRecieved=0;
+        ngo=man;
+        donationRecived=0;
         contractAddress=this;
         donorCount=0;
     }
     
     modifier onlyManager
     {
-        require(msg.sender == manager);
+        require(msg.sender == ngo);
         _;
     }
     
@@ -58,17 +93,17 @@ contract NewRequest {
         require(msg.value >= minimumContribution);
         donors[msg.sender]=true;
         
-        contriRecieved=contractAddress.balance;
+        donationRecived=contractAddress.balance;
         donorCount+=1;
     }
-    function createRequest(string description,uint monReq, address Merchant) onlyManager public
+    function utilizeDonation(string description,uint amountRequired, address Merchant) onlyManager public
     {
         
         Request memory newReq= Request({
             description:description,
-            monReq:monReq,
+            amountRequired:amountRequired,
             Merchant:Merchant,
-            appCount:0,
+            approvalCount:0,
             complete:false
         });
         requests.push(newReq);
@@ -76,19 +111,20 @@ contract NewRequest {
     function approveRequest(uint index) public
     {
         require(donors[msg.sender]);
-        require(!requests[index].approved[msg.sender]);
-        requests[index].approved[msg.sender]=true;
-        requests[index].appCount+=1;
+        require(!requests[index].approvers[msg.sender]);
+        requests[index].approvers[msg.sender]=true;
+        requests[index].approvalCount+=1;
         
     }
     
     function finalizeRequest(uint index) public onlyManager
     {
-        require(requests[index].appCount > donorCount/2);
+        require(requests[index].approvalCount > donorCount/2);
         require(!requests[index].complete);
-        requests[index].Merchant.transfer(requests[index].monReq);
+        requests[index].Merchant.transfer(requests[index].amountRequired);
         requests[index].complete=true;
     }
     
     
 }
+
