@@ -10,6 +10,8 @@ contract NewRequest {
     uint public minimumContribution;
     mapping(address=>bool) donors;
     
+    address contractAddress;
+    
     uint public donationRecived;
     
     uint donorCount;
@@ -23,7 +25,7 @@ contract NewRequest {
         mapping(address=>bool) approved;
     }
     
-    Request[] requests;
+    Request[] public requests;
     
     constructor (uint totalCon) public
     {
@@ -31,6 +33,14 @@ contract NewRequest {
         minimumContribution=uint(totalCon/20);
         manager=msg.sender;
         contriRecieved=0;
+        contractAddress=this;
+        donorCount=0;
+    }
+    
+    modifier onlyManager
+    {
+        require(msg.sender == manager);
+        _;
     }
     
     function donateMoney () payable public
@@ -38,10 +48,12 @@ contract NewRequest {
         require(msg.value> minimumContribution);
         donors[msg.sender]=true;
         
-        contriRecieved=this.balance;
+        contriRecieved=contractAddress.balance;
+        donorCount+=1;
     }
-    function createRequest(string description,uint monReq, address Merchant)
+    function createRequest(string description,uint monReq, address Merchant) onlyManager public
     {
+        
         Request memory newReq= Request({
             description:description,
             monReq:monReq,
@@ -49,6 +61,21 @@ contract NewRequest {
             appCount:0,
             complete:false
         });
+        requests.push(newReq);
     }
+    function approveRequest(uint index) public
+    {
+        requests[index].approved[msg.sender]=true;
+        requests[index].appCount+=1;
+        
+    }
+    
+    function finalizeRequest(uint index) public onlyManager
+    {
+            require(requests[index].appCount > donorCount/2);
+            
+            requests[index].complete=true;
+    }
+    
     
 }
