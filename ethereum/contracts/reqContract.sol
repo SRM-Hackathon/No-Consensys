@@ -1,6 +1,16 @@
 pragma solidity ^0.4.21;
 
-
+contract Factory
+{
+    address ngoAdd;
+    uint reqDonation;
+    
+    constructor (uint reqDon)
+    {
+        reqDonation=reqDon;
+        ngoAdd=msg.sender;
+    }
+}
 
 contract NewRequest {
     
@@ -65,6 +75,8 @@ contract NewRequest {
     }
     function approveRequest(uint index) public
     {
+        require(donors[msg.sender]);
+        require(!requests[index].approved[msg.sender]);
         requests[index].approved[msg.sender]=true;
         requests[index].appCount+=1;
         
@@ -73,7 +85,8 @@ contract NewRequest {
     function finalizeRequest(uint index) public onlyManager
     {
             require(requests[index].appCount > donorCount/2);
-            
+            require(!requests[index].complete);
+            requests[index].Merchant.transfer(requests[index].monReq);
             requests[index].complete=true;
     }
     
