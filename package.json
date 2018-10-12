@@ -11,5 +11,10 @@
     "url": "https://github.com/orgs/SRM-Hackathon/teams/no-consensys"
   },
   "author": "NoConsensys",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "ganache-cli": "^6.1.8",
+    "web3": "^1.0.0-beta.36"
+  }
 }
