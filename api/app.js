@@ -20,6 +20,7 @@ pgClient.connect()
 	.catch((err) => {
 		console.error('Error connecting to database: ' + err);
 	});
+module.exports.PgClient = pgClient;
 
 const ApiRouter = require('./routers/apiRouter');
 
@@ -29,7 +30,3 @@ const port = 3000;
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
 });
-
-module.exports = {
-	PgClient: pgClient
-}
