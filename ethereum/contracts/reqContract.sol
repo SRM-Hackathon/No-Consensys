@@ -55,7 +55,7 @@ contract NewRequest {
     
     function donateMoney () payable public
     {
-        require(msg.value> minimumContribution);
+        require(msg.value >= minimumContribution);
         donors[msg.sender]=true;
         
         contriRecieved=contractAddress.balance;
@@ -84,10 +84,10 @@ contract NewRequest {
     
     function finalizeRequest(uint index) public onlyManager
     {
-            require(requests[index].appCount > donorCount/2);
-            require(!requests[index].complete);
-            requests[index].Merchant.transfer(requests[index].monReq);
-            requests[index].complete=true;
+        require(requests[index].appCount > donorCount/2);
+        require(!requests[index].complete);
+        requests[index].Merchant.transfer(requests[index].monReq);
+        requests[index].complete=true;
     }
     
     
