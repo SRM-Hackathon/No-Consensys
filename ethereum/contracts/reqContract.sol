@@ -2,13 +2,13 @@ pragma solidity ^0.4.21;
 
 contract Factory
 {
-    address ngoAdd;
+    address[] public deployedCampaigns;
     uint reqDonation;
     
-    constructor (uint reqDon)
+    function CreateNewRequest (uint reqDon) public
     {
-        reqDonation=reqDon;
-        ngoAdd=msg.sender;
+     address newRequest=new NewRequest(reqDon,msg.sender);
+     deployedCampaigns.push(newRequest);
     }
 }
 
@@ -37,11 +37,11 @@ contract NewRequest {
     
     Request[] public requests;
     
-    constructor (uint totalCon) public
+    constructor (uint totalCon,address man) public
     {
         totalContribution=totalCon;
         minimumContribution=uint(totalCon/20);
-        manager=msg.sender;
+        manager=man;
         contriRecieved=0;
         contractAddress=this;
         donorCount=0;
