@@ -26,7 +26,7 @@ module.exports.createNgo = function(req, res) {
 		});
 		return;
 	}
-	
+
 	let name = req.body.name;
 	let description = req.body.description;
 	let address = req.body.address;
@@ -46,4 +46,22 @@ module.exports.createNgo = function(req, res) {
 				error: 'Could not create NGO'
 			});
 		});
+}
+
+module.exports.findNgoById = function(req, res) {
+	let id = req.params.id;
+
+	const query = `SELECT * FROM ngos WHERE id=$1`;
+	PgClient.query(query, [id])
+		.then((result) => {
+			if (result.rowCount == 0)
+				return Promise.reject('Could not find NGO');
+			let ngo = result.rows[0];
+			res.json(ngo);
+		})
+		.catch(() => {
+			res.json({
+				error: `Cannot find NGO with id ${id}`
+			});
+		})
 }
