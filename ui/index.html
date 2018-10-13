@@ -389,7 +389,7 @@ $('#myModal').on('shown.bs.modal', function () {
 					</button>
 					</div>
 					<div class="modal-body" style="text-align:center;font-size:20px">
-						<form id="myform">
+						<form id="myform" autocomplete="off">
 							<div class="mt-10">
 								<input type="text" name="address" id="metaid" required placeholder="Metamask ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Metamask ID'" required class="single-input">
 							</div>
@@ -398,8 +398,8 @@ $('#myModal').on('shown.bs.modal', function () {
 						
 						</div>
 					<div class="modal-footer">
-						<div id="msg" style="color:red"/>
-						<button type="submit" class="submit btn btn-secondary" id="sub">Submit</button>
+						<button type="submit" class="submit btn btn-secondary" id="sub" >		<div id="msg" >Verify</div>
+						</button>
 					</div>	</form>
 					</div>
 				</div>
@@ -415,30 +415,31 @@ var showText = function (target, message, index, interval) {
 					$("#myform").submit(function(e) {
 						e.preventDefault(); // avoid to execute the actual submit of the form.
 						localStorage["address"] = document.getElementById("metaid").value;
+						$("#sub").prop('disabled', true);
 
-					console.log("hi");
 					var form = $(this);
-					$("#sub").prop('disabled', true);
 					$(function () {
-  showText("#msg", "Verifying in blockchain...", 0, 15);   
+						
+  showText("#msg", "ing in blockchain...", 0, 15);   
 });
 // document.getElementById("sub").innerHTML="Verifying in blockchain...";
 
 					$.ajax({
 								 type: "POST",
-								 url: 'http://localhost:8011/api/checkUser',
+								 url: 'http://localhost:8012/api/checkUser',
 								 data: form.serialize(), // serializes the form's elements.
 								 success: function(data)
 								 {
+									 console.log(data);
 if(data.exists)
 {
 var cat=data.category;
 localStorage["category"] = cat;
-localStorage["id"] = data.id;
+// localStorage["id"] = data.ngo.id;
+// localStorage["name"] = data.ngo.name;
 
 switch (cat)
-{
-	case 'NGO' : window.location="ngo.html";
+{ case 'NGO' : window.location="ngo.html";
 	 break;
 	case 'Donor' : window.location="donor.html";
 	break;

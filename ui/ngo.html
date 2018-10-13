@@ -72,7 +72,7 @@ text-align:center;
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								NGO Page		
+							Welcome back, NGO <div id="ngoname" style="display:inline-block"></div>!
 							</h1>	
 							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> NGO</a></p>
 						</div>	
@@ -203,12 +203,12 @@ var table = document.createElement("table");
 	
 					</button>
 					</div>
-					<div class="modal-body" style="font-size:20px">
+					<div class="modal-body" style="text-align:left;font-size:20px">
 						<form id="myform">
 							<div class="mt-10">
 									<input type="number" name="contribution" required placeholder="Total Donation Required" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Total Donation Required'" required class="single-input">
-									<p>NGO ID : <div id="ngoid"></div></p>
-									<p>NGO Address : <div id="ngoadd"></div></p>
+								<br>	<p style="display:inline-block">NGO ID : <div id="ngoid"></div></p>
+									<p style="display:inline-block"> NGO Address : <div id="ngoadd"></div></p>
 
 							</div>
 						
@@ -226,8 +226,11 @@ var table = document.createElement("table");
 	value = localStorage["category"];
 var id=localStorage['id'];
 var add=localStorage['address'];
+var name=localStorage['name'];
+
 	document.getElementById("ngoadd").innerHTML=add;
 	document.getElementById("ngoid").innerHTML=id;
+	document.getElementById("ngoname").innerHTML=name;
 
 </script>
 	</html>

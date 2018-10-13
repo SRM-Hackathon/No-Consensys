@@ -32,7 +32,7 @@ const ApiRouter = require('./routers/apiRouter');
 
 app.use('/api/', ApiRouter);
 
-const port = 8011;
+const port = 8012;
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
 });
