@@ -65,3 +65,18 @@ module.exports.findNgoById = function(req, res) {
 			});
 		})
 }
+
+module.exports.listAllDonationRequests = async function(req, res) {
+	let id = req.params.id;
+
+	const query = 
+		`SELECT * FROM ngos
+		INNER JOIN donation_requests ON donation_requests.ngo_id=ngos.id
+		AND ngos.id=$1`;
+
+	let result = await PgClient.query(query, [id]);
+
+	let arr = [];
+	result.rows.map(row => arr.push(row));
+	res.json(arr);
+}
