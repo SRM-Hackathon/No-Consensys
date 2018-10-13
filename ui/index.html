@@ -273,7 +273,7 @@
 							</h1><br>
 							<p class="text-white text" style="font-size:22px"> Decentralized donation platform, that builds trust in charities and empower donor giving 
 							</p>
-							<a href="#"  data-toggle="modal" data-target="#exampleModal2"   class="primary-btn header-btn text-uppercase">LOGIN INTO EXISTING ACCOUNT </a>
+							<a data-toggle="modal" data-target="#exampleModal2"   class="primary-btn header-btn text-uppercase">LOGIN INTO EXISTING ACCOUNT </a>
 							<!-- <a href="#"  data-toggle="modal" data-target="#exampleModal" class="primary-btn header-btn text-uppercase">REGISTER </a> -->
 
 						</div>
@@ -355,28 +355,7 @@ $('#myModal').on('shown.bs.modal', function () {
 });
 
 </script>
-<script>
 
-$("#myform").submit(function(e) {
-
-console.log("hi");
-var form = $(this);
-
-$.ajax({
-			 type: "POST",
-			 url: '',
-			 data: form.serialize(), // serializes the form's elements.
-			 success: function(data)
-			 {
-					 alert(data); // show response from the php script.
-			 }
-		 });
-
-e.preventDefault(); // avoid to execute the actual submit of the form.
-});
-
-
-</script>
 		</body>
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -410,7 +389,7 @@ e.preventDefault(); // avoid to execute the actual submit of the form.
 					</button>
 					</div>
 					<div class="modal-body" style="text-align:center;font-size:20px">
-						<form id="myform" action="#" method="POST">
+						<form id="myform">
 							<div class="mt-10">
 								<input type="text" name="metaid" required placeholder="Metamask ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Metamask ID'" required class="single-input">
 							</div>
@@ -424,6 +403,29 @@ e.preventDefault(); // avoid to execute the actual submit of the form.
 					</div>
 				</div>
 				</div>
+
+				<script>
+
+					$("#myform").submit(function(e) {
+					
+					console.log("hi");
+					var form = $(this);
+					
+					$.ajax({
+								 type: "POST",
+								 url: 'http://aa.com',
+								 data: form.serialize(), // serializes the form's elements.
+								 success: function(data)
+								 {
+										 alert(data); // show response from the php script.
+								 }
+							 });
+					
+					e.preventDefault(); // avoid to execute the actual submit of the form.
+					});
+					
+					
+					</script>
 	</html>
 
 
