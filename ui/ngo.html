@@ -1,0 +1,233 @@
+	<!DOCTYPE html>
+	<html lang="zxx" class="no-js">
+	<head>
+		<!-- Mobile Specific Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Favicon-->
+		<link rel="shortcut icon" href="img/fav.png">
+		<!-- Author Meta -->
+		<meta name="author" content="codepixer">
+		<!-- Meta Description -->
+		<meta name="description" content="">
+		<!-- Meta Keyword -->
+		<meta name="keywords" content="">
+		<!-- meta character set -->
+		<meta charset="UTF-8">
+		<!-- Site Title -->
+		<title>CrypDonate</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+
+			<!--
+			CSS
+			============================================= -->
+			<link rel="stylesheet" href="css/linearicons.css">
+			<link rel="stylesheet" href="css/font-awesome.min.css">
+			<link rel="stylesheet" href="css/bootstrap.css">
+			<link rel="stylesheet" href="css/magnific-popup.css">
+			<link rel="stylesheet" href="css/nice-select.css">	
+			<link rel="stylesheet" href="css/hexagons.min.css">							
+			<link rel="stylesheet" href="css/animate.min.css">
+			<link rel="stylesheet" href="css/owl.carousel.css">
+			<link rel="stylesheet" href="css/main.css">
+			<style>
+			   th, td, p, input {
+font-family: 'Lato';
+font-weight : 100;
+font-size:25px;
+
+text-align:center;
+        }
+        table, th, td 
+        {
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+		}
+		</style>
+		</head>
+		<body>	
+			  <header id="header" id="home">
+			    <div class="container main-menu">
+			    	<div class="row align-items-center justify-content-between d-flex">
+				      <div id="logo">
+				      </div>
+				      <nav id="nav-menu-container">
+				        <ul class="nav-menu">
+				          <li class="menu-active"><a href="index.html">Home</a></li>
+				        </ul>
+				      </nav><!-- #nav-menu-container -->		    		
+			    	</div>
+			    </div>
+			  </header><!-- #header -->
+			  
+			<!-- start banner Area -->
+			<section class="banner-area relative" id="home">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							<h1 class="text-white">
+								NGO Page		
+							</h1>	
+							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> NGO</a></p>
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->	
+
+			<!-- Start Sample Area -->
+			<div class="container">
+				<div class="row">
+				<div class="col-lg-6">
+			<section class="sample-text-area">
+				<div class="container">
+					<h3 class="text-heading">Previous Requests</h3>
+					<h4  id="showData"></h4>
+				</div>
+			</section>
+		</div>
+		<div class="col-lg-6">
+				<section class="sample-text-area">
+					<div class="container">
+					<button type="button"  data-toggle="modal" data-target="#exampleModal2" class="btn btn-success">Create a Request</button>
+
+					</div>
+				</section>
+			</div>
+		</div>
+		</div>
+			<!-- End Sample Area -->
+			<!-- Start Button -->
+			
+			<!-- End footer Area -->	
+
+			<script src="js/vendor/jquery-2.2.4.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+			<script src="js/vendor/bootstrap.min.js"></script>			
+			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+  			<script src="js/easing.min.js"></script>			
+			<script src="js/hoverIntent.js"></script>
+			<script src="js/superfish.min.js"></script>	
+			<script src="js/jquery.ajaxchimp.min.js"></script>
+			<script src="js/jquery.magnific-popup.min.js"></script>	
+			<script src="js/owl.carousel.min.js"></script>	
+			<script src="js/hexagons.min.js"></script>							
+			<script src="js/jquery.nice-select.min.js"></script>	
+			<script src="js/jquery.counterup.min.js"></script>
+			<script src="js/waypoints.min.js"></script>							
+			<script src="js/mail-script.js"></script>	
+			<script src="js/main.js"></script>	
+
+<script>
+
+
+	CreateTableFromJSON();
+		function CreateTableFromJSON() {
+			// var ngos = [
+			// 	{
+			// 		"NGO ID": "1",
+			// 		"NGO Name": "Computer Architecture",
+					
+			// 	},
+			// 	{
+					
+			// 		"NGO ID": "1",
+			// 		"NGO Name": "Computer Architecture",
+					
+			// 	},
+			// 	{
+			// 		"NGO ID": "1",
+			// 		"NGO Name": "Computer Architecture",
+					
+			// 	}
+			// ]
+	var ngos;
+
+	var length;
+			$.get('http://localhost:8000/api/ngos').done(function(result)
+			{
+ngos=result;
+console.log(ngos.length);
+
+	var col = ['name'];
+
+console.log(col);
+var table = document.createElement("table");
+	
+	// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+	var tr = table.insertRow(-1);                   // TABLE ROW.
+
+	// ADD JSON DATA TO THE TABLE AS ROWS.
+	for (var i = 0; i < ngos.length; i++) {
+
+		tr = table.insertRow(-1);
+
+		for (var j = 0; j < col.length; j++) {
+			var tabCell = tr.insertCell(-1);
+			tabCell.innerHTML = ngos[i][col[0]];
+		}
+	}
+
+	// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+	var divContainer = document.getElementById("showData");
+	divContainer.innerHTML = "";
+	divContainer.appendChild(table);
+
+
+}
+			);
+			// EXTRACT VALUE FOR HTML HEADER. 
+			// ('Book ID', 'Book Name', 'Category' and 'Price')
+		
+	
+			// CREATE DYNAMIC TABLE.
+			
+		}
+	</script>
+		</body>
+			
+		<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel2">Create a Request </h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		
+	
+					</button>
+					</div>
+					<div class="modal-body" style="text-align:center;font-size:20px">
+						<form id="myform">
+							<div class="mt-10">
+									<input type="number" name="contribution" required placeholder="Minimum Contribution" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Minimum Contribution'" required class="single-input">
+									<p>NGO ID : <div id="ngoid"></div></p>
+									<p>NGO Address : <div id="ngoadd"></div></p>
+
+							</div>
+						
+						
+						
+						</div>
+					<div class="modal-footer">
+						<div id="msg" style="color:red"/>
+						<button type="submit" class="submit btn btn-secondary"   id="sub">Submit</button>
+					</div>	</form>
+					</div>
+				</div>
+				</div>
+<script>
+	value = localStorage["category"];
+var id=localStorage['id'];
+var add=localStorage['address'];
+	document.getElementById("ngoadd").innerHTML=add;
+	document.getElementById("ngoid").innerHTML=id;
+
+</script>
+	</html>
