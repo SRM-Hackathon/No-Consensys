@@ -1,4 +1,5 @@
 CREATE TABLE donors (
     id serial,
-    name varchar
+    name varchar,
+    acc_address varchar
 );
