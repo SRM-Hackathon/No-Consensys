@@ -244,7 +244,9 @@
 							<span data-text-preloader="E" class="letters-loading">
 								E
 							</span>
+
 						</div>
+						
 					</div>	
 					<div class="loader-section section-left"></div>
 					<div class="loader-section section-right"></div>
@@ -347,7 +349,7 @@
         $(this).remove();
       });
     }
-  }, 1000);
+  }, 2000);
   
 });
 $('#myModal').on('shown.bs.modal', function () {
@@ -426,7 +428,7 @@ var showText = function (target, message, index, interval) {
 
 					$.ajax({
 								 type: "POST",
-								 url: 'http://localhost:8012/api/checkUser',
+								 url: 'http://localhost:8013/api/checkUser',
 								 data: form.serialize(), // serializes the form's elements.
 								 success: function(data)
 								 {
@@ -437,7 +439,20 @@ var cat=data.category;
 localStorage["category"] = cat;
 // localStorage["id"] = data.ngo.id;
 // localStorage["name"] = data.ngo.name;
+if(cat==="NGO")
+{
 
+	localStorage["id"] = data.ngo.id;
+localStorage["name"] = data.ngo.name;
+
+}
+else if(cat==="Donor")
+{
+
+		localStorage["id"] = data.donor.id;
+localStorage["name"] = data.donor.name;
+
+}
 switch (cat)
 { case 'NGO' : window.location="ngo.html";
 	 break;

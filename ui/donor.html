@@ -72,8 +72,8 @@ text-align:center;
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Donor Page		
-							</h1>	
+									Welcome back, Donor <div id="donorname" style="display:inline-block"></div>!
+								</h1>	
 							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> Donor</a></p>
 						</div>	
 					</div>
@@ -190,5 +190,14 @@ var table = document.createElement("table");
 			
 		}
 	</script>
+	<script>
+			value = localStorage["category"];
+		var id=localStorage['id'];
+		var add=localStorage['address'];
+		var name=localStorage['name'];
+		
+			document.getElementById("donorname").innerHTML=name;
+		
+		</script>
 		</body>
 	</html>
