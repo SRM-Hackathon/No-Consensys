@@ -2,7 +2,6 @@ const web3 = require('../web3');
 const Factory = require('../factory');
 
 module.exports.createNewDonationRequest = async function(sender, amount) {
-	console.log('Inside sdfd')
 	await Factory.methods.CreateNewDonationRequest(amount).send({
 		from: sender,
 		gas: '1000000'
@@ -41,10 +40,3 @@ module.exports.checkNgo = async function(address) {
 module.exports.checkMerchant = async function(address) {
 	return await Factory.methods.findMerchant(address).call();
 }
-
-async function bolo() {
-	let out = await module.exports.checkNgo('0x076fd7FDb6732bd7d5f886Ebfe2AEE21F7395728');
-	console.log(out);
-}
-
-bolo();
