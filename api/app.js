@@ -1,10 +1,12 @@
 const express = require('express');
 const pg = require('pg');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,7 +32,7 @@ const ApiRouter = require('./routers/apiRouter');
 
 app.use('/api/', ApiRouter);
 
-const port = 3000;
+const port = 8000;
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
 });
