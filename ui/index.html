@@ -391,37 +391,63 @@ $('#myModal').on('shown.bs.modal', function () {
 					<div class="modal-body" style="text-align:center;font-size:20px">
 						<form id="myform">
 							<div class="mt-10">
-								<input type="text" name="metaid" required placeholder="Metamask ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Metamask ID'" required class="single-input">
+								<input type="text" name="address" required placeholder="Metamask ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Metamask ID'" required class="single-input">
 							</div>
 						
 						
 						
 						</div>
 					<div class="modal-footer">
-						<button type="submit" class="submit btn btn-secondary" >Submit</button>
+						<div id="msg" style="color:red"/>
+						<button type="submit" class="submit btn btn-secondary" id="sub">Submit</button>
 					</div>	</form>
 					</div>
 				</div>
 				</div>
 
 				<script>
-
+var showText = function (target, message, index, interval) {   
+  if (index < message.length) {
+    $(target).append(message[index++]);
+    setTimeout(function () { showText(target, message, index, interval); }, interval);
+  }
+}
 					$("#myform").submit(function(e) {
-					
+						e.preventDefault(); // avoid to execute the actual submit of the form.
+
 					console.log("hi");
 					var form = $(this);
-					
+					$("#sub").prop('disabled', true);
+					$(function () {
+  showText("#msg", "Verifying in blockchain...", 0, 15);   
+});
+// document.getElementById("sub").innerHTML="Verifying in blockchain...";
+
 					$.ajax({
 								 type: "POST",
-								 url: 'http://aa.com',
+								 url: 'http://localhost:8011/api/checkUser',
 								 data: form.serialize(), // serializes the form's elements.
 								 success: function(data)
 								 {
-										 alert(data); // show response from the php script.
+if(data.exists)
+{
+var cat=data.category;
+switch (cat)
+{
+	case 'NGO' : window.location="ngo.html";
+	 break;
+	case 'Donor' : window.location="donor.html";
+	break;
+	case 'Merchant' : window.location="merchant.html";
+	break;
+	default : alert("Account does not exist!");
+}
+
+}
 								 }
 							 });
-					
-					e.preventDefault(); // avoid to execute the actual submit of the form.
+							 $("#sub").prop('disabled', false);
+
 					});
 					
 					
