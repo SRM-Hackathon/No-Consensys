@@ -7,7 +7,7 @@ contract Factory
     
     function CreateNewDonationRequest (uint reqDonationAmount) public
     {
-     require (findNgo(msg.sender));
+    
      address newDonationRequest=new NewDonationRequest(reqDonationAmount,msg.sender);
      deployedCampaigns.push(newDonationRequest);
     }
