@@ -4,9 +4,11 @@ const Factory = require('../../ethereum/models/factory');
 module.exports.checkUser = async function(req, res) {
 	let address = req.body.address;
 	
-	let isNgo = await Factory.checkNgo(address);
-	let isDonor = await Factory.checkDonor(address);
-	let isMerchant = await Factory.checkMerchant(address);
+	let [isNgo, isDonor, isMerchant] = await Promise.all([
+		Factory.checkNgo(address),
+		Factory.checkDonor(address),
+		Factory.checkMerchant(address)
+	]);
 
 	if (isNgo) {
 		res.json({
